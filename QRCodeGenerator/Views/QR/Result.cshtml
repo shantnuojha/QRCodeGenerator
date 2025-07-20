@@ -1,0 +1,38 @@
+﻿@model QRCodeGenerator.Models.QrViewModel
+
+<style>
+    .qr-grid {
+        display: grid;
+        grid-template-columns: repeat( @Model.Size, 10px);
+        grid-template-rows: repeat( @Model.Size, 10px);
+        gap: 0;
+        background-color: white;
+        border: 4px solid white;
+        width: fit-content;
+        margin: 20px auto;
+    }
+
+    .qr-cell {
+        width: 10px;
+        height: 10px;
+    }
+
+    .black {
+        background-color: black;
+    }
+
+    .white {
+        background-color: white;
+    }
+</style>
+
+<div class="qr-grid">
+    @for (int r = 0; r < Model.Size; r++)
+    {
+        for (int c = 0; c < Model.Size; c++)
+        {
+            var cls = Model.Matrix[r, c] ? "black" : "white";
+            <div class="qr-cell @cls"></div>
+        }
+    }
+</div>

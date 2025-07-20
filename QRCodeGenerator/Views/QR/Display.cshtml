@@ -1,0 +1,65 @@
+﻿@model bool[,]
+@{
+    ViewData["Title"] = "QR Code Display";
+    var size = Model.GetLength(0);
+}
+
+<h2>QR Code for: "@ViewBag.InputText"</h2>
+
+<style>
+    .qr-grid {
+        display: grid;
+        grid-template-columns: repeat( @size, 10px);
+        gap: 0;
+        background: white;
+        padding: 20px;
+        width: max-content;
+    }
+
+    .qr-cell {
+        width: 10px;
+        height: 10px;
+    }
+
+    .dark {
+        background-color: black;
+    }
+
+    .light {
+        background-color: white;
+    }
+
+    #qr-wrapper {
+        display: inline-block;
+        border: 1px solid #ccc;
+        padding: 10px;
+        background: white;
+    }
+</style>
+
+<div id="qr-wrapper">
+    <div class="qr-grid" id="qr-code">
+        @for (int r = 0; r < size; r++)
+        {
+            for (int c = 0; c < size; c++)
+            {
+                <div class="qr-cell @(Model[r, c] ? "dark" : "light")"></div>
+            }
+        }
+    </div>
+</div>
+
+<br />
+<button onclick="downloadQR()">Download as PNG</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    function downloadQR() {
+        html2canvas(document.getElementById("qr-wrapper")).then(canvas => {
+            var link = document.createElement('a');
+            link.download = 'qr-code.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    }
+</script>

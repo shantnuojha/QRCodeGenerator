@@ -1,0 +1,10 @@
+﻿@{
+    ViewData["Title"] = "QR Code Generator";
+}
+
+<h2>Enter text to generate QR Code</h2>
+
+<form action="/qr/display" method="post">
+    <input type="text" name="text" required style="width: 300px; padding: 8px;" />
+    <button type="submit">Generate</button>
+</form>
